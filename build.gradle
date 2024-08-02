@@ -1,0 +1,52 @@
+defaultTasks 'clean', 'test', 'aggregate'
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'net.serenity-bdd.aggregator'
+
+group 'com.magneto'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("net.serenity-bdd:serenity-gradle-plugin:2.2.0")
+    }
+}
+
+dependencies {
+    implementation('net.serenity-bdd:serenity-screenplay-webdriver:2.2.0')
+    implementation('net.serenity-bdd:serenity-screenplay:2.2.0')
+    implementation('net.serenity-bdd:serenity-cucumber5:2.2.0')
+    implementation('net.serenity-bdd:serenity-junit:2.2.0')
+    implementation('net.serenity-bdd:serenity-core:2.2.0')
+    implementation('io.cucumber:cucumber-junit:5.5.0')
+    implementation('io.cucumber:cucumber-core:5.5.0')
+    testImplementation('net.serenity-bdd:serenity-junit:2.2.0')
+    testImplementation('net.serenity-bdd:serenity-core:2.2.0')
+    testImplementation('org.slf4j:slf4j-simple:1.7.7')
+    testImplementation('junit:junit:4.12')
+}
+
+test {
+    systemProperties System.getProperties()
+    systemProperty "file.encoding", "UTF-8"
+    systemProperty "feature.file.encoding", "UTF-8"
+    systemProperty "cucumber.options", System.properties.getProperty("cucumber.options")
+    testLogging.showStandardStreams = true
+    finalizedBy(aggregate)
+}
+
+gradle.startParameter.continueOnFailure = true
