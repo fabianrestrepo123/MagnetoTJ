@@ -1,4 +1,4 @@
-Feature:  Realizar el flujo de compra de un ítem en SauceDemo
+Feature: Realizar el flujo de compra de un ítem en SauceDemo
 
   Scenario: Comprar un Sauce Labs Backpack
 
